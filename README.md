@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+
+git remote set-url origin https://dhananjaynevase:YOUR_TOKEN@github.com/dhananjaynevase/pizza-app.git
+
+1. git remote set-url origin https://dhananjaynevase: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@github.com/dhananjaynevase/pizza-app.git
+
+2. git push
