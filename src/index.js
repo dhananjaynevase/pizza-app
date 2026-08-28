@@ -46,6 +46,37 @@ const pizzaData = [
     soldOut: false,
   },
 ];
+const jonas = {
+  imageUrl: "https://kristalle.com/wp-content/uploads/2020/07/dummy-profile-pic-1.jpg",
+  name: "Jonas Schmedtmann",
+  bio: "Full-stack web developer and teacher at Udemy. When not coding or preparing a course, I like to play board games, to cook (and eat), or to just enjoy the Portuguese sun at the beach.",
+  skills: [
+    { 
+      skill: "Teach 🎤", 
+      level: "beginner",
+      color: "#2563eb" 
+    },
+    { 
+      skill: "HTML+CSS",
+      level: "beginner",
+      color: "#facc15" 
+    },
+    { 
+      skill: "JavaScript",
+      level: "Intermediate",
+      color: "#facc15" 
+    },
+    { 
+      skill: "Svelte",
+      level: "Advanced",
+      color: "#dc2626"
+    },
+  ],
+};
+const style = {
+  textAlign: "center",
+  padding: "15px 0 10px"
+}
 
 function App() {
   return (
@@ -53,6 +84,7 @@ function App() {
       <Header />
       <Menu />
       <Footer />
+      <ProfileInfo />
     </div>
   );
 }
@@ -69,21 +101,23 @@ function Header() {
 }
 
 function Menu() {
-          console.log(pizzaData)
-    const pizzas = pizzaData;
-    // const pizzas = [];
-    const numPizzas = pizzas.length;
+  console.log(pizzaData)
+  const pizzas = pizzaData;
+  // const pizzas = [];
+  const numPizzas = pizzas.length;
   return (
     <main className="menu">
       <h2>Our menu</h2>
 
       {numPizzas > 0 ? (
-        <ul className="pizzas"> 
+        <ul className="pizzas">
           {pizzas.map((pizza) => (
-            <Pizza pizzaObj= {pizza} key={pizza.name} />          
+            <Pizza pizzaObj={pizza} key={pizza.name} />
           ))}
         </ul>
-        ): <p>we are working on our menu. please come back later :)</p>}
+      ) : (
+        <p>we are working on our menu. please come back later :)</p>
+      )}
 
       {/* {numPizzas > 0 ? (
         <>
@@ -118,22 +152,22 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({ pizzaObj }) {
+  // console.log(props);
 
   // if(props.pizzaObj.soldOut) return null;
   // if (pizzaObj.soldOut) return null;
 
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        {/* <span>{pizzaObj.price}</span> */}
 
         {/* {pizzaObj.soldOut ? (
-          <span>SOLD OUT</span>
+          <span> SOLD OUT </span>
         ) : (
           <span>{pizzaObj.price}</span>
         )} */}
@@ -160,7 +194,7 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen ? (
-        <Order closeHours={closeHour}/>
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           we are happy to welcome between {openHour}:00 and {closeHour}:00.
@@ -179,30 +213,68 @@ function Footer() {
   // return React.createElement("footer", null, "We're currently open!");
 }
 
-function Order(props){
+function Order({ closeHour, openHour }) {
   // console.log(props);
   return (
-  <div className="order">
-          <p>
-            we're open until {props.closeHours}:00 Come visit us or order online
-          </p>
-          <button className="btn">Order</button>
-        </div>
+    <div className="order">
+      <p>
+        we're open from {openHour}:00 to {closeHour}:00 Come visit us or order online
+      </p>
+      <button className="btn">Order</button>
+    </div>
   )
 }
 
-// function Order({ closeHour, openHour }) {
-//   return (
-//     <div className="order">
-//       <p>
-//         We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
-//         online.
-//       </p>
-//       <button className="btn">Order</button>
-//     </div>
-//   );
-// }
+function ProfileInfo() {
+  return (
+    <div className="profileWapper">
+      <img src={jonas.imageUrl} alt={jonas.imageUrl} />
+      <h1 style={style}>{jonas.name}</h1>
+      <p style={{ width: "380px" }}>{jonas.bio}</p>
+      <SkillSet />
+    </div>
+  )
+}
 
+function SkillSet() {
+  return (
+    // jonas.skills.map((item) => (
+    //   <span key={item.skill}
+    //     style={{
+    //       backgroundColor: item.color,
+    //       color: "#fff",
+    //       padding: "5px 10px",
+    //       margin: "5px",
+    //       borderRadius: "5px",
+    //       display: "inline-block",
+    //     }}>
+    //     {item.skill}
+    //   </span>
+    // ))
+
+    <div className="skill-list">
+      {
+        jonas.skills.map((skill) =>(
+          <Skills skill={skill.skill} key ={skill.skill} color = {skill.color}  level={skill.level}/>
+        ))
+      }
+    </div>
+  )
+}
+
+function Skills(props){
+  console.log(props.skill)
+  return(
+    <div className="Skillset" style={{backgroundColor: props.color}}>
+      <span>{props.skill}</span>
+      <span>
+        {props.level === "beginner" && "🤓"}
+        {props.level === "Intermediate" && "👍"}
+        {props.level === "Advanced" && "💀"}
+      </span>
+    </div>
+  )
+}
 // React v18
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
