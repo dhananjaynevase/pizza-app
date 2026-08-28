@@ -180,7 +180,7 @@ function Footer() {
 }
 
 function Order(props){
-  console.log(props);
+  // console.log(props);
   return (
   <div className="order">
           <p>
